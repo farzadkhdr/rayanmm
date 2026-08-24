@@ -257,86 +257,13 @@
             font-size: 0.9rem;
             margin-top: 10px;
             transition: all 0.3s ease;
-        }
-
-        /* مۆداڵی دەستپێکردن */
-        .start-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            animation: modalFade 0.5s ease;
-        }
-
-        @keyframes modalFade {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            text-align: center;
-            padding: 40px;
-            border-radius: 25px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 182, 193, 0.3);
-            animation: modalPop 0.5s ease;
-        }
-
-        @keyframes modalPop {
-            from {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .start-button {
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-family: 'Noto Kurdish', sans-serif;
-            background: linear-gradient(135deg, #ff69b4, #ff1493);
-            color: white;
-            border: none;
-            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
-            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
         }
 
-        .start-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.6);
-        }
-
-        .start-button:active {
-            transform: translateY(-1px);
-        }
-
-        .start-text {
-            color: #ffd1dc;
-            font-size: 1.1rem;
-            margin-top: 15px;
-        }
-
-        .heart-animation {
-            font-size: 50px;
-            animation: bigHeartbeat 1s ease-in-out infinite;
-        }
-
-        @keyframes bigHeartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.3); }
+        .music-status:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         @media (max-width: 480px) {
@@ -350,26 +277,10 @@
             .romantic-message {
                 font-size: 1rem;
             }
-            .start-button {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- مۆداڵی دەستپێکردن -->
-    <div class="start-modal" id="startModal">
-        <div class="modal-content">
-            <div class="heart-animation">❤️</div>
-            <h2 style="color: #ffb6c1; margin: 20px 0;">ڕەیان ❤️</h2>
-            <p class="start-text">بۆ دەستپێکردنی ئەزموونە ڕۆمانسییەکە کلیک بکە</p>
-            <button class="start-button" id="startButton">
-                💕 دەستپێکردن 💕
-            </button>
-        </div>
-    </div>
-
     <!-- دڵی باکگراوند -->
     <div class="hearts-bg" id="heartsBg"></div>
 
@@ -408,8 +319,8 @@
                 <div class="music-bar"></div>
             </div>
 
-            <!-- دۆخی مۆسیقا -->
-            <p class="music-status" id="musicStatus">🎵 مۆسیقا لە کاردایە...</p>
+            <!-- دۆخی مۆسیقا - کلیک بکە بۆ دەستپێکردن -->
+            <p class="music-status" id="musicStatus">🎵 کلیک بکە بۆ دەستپێکردنی مۆسیقا</p>
         </div>
     </div>
 
@@ -449,8 +360,7 @@
         const messageElement = document.getElementById('message');
         const audio = document.getElementById('bgMusic');
         const musicStatus = document.getElementById('musicStatus');
-        const startModal = document.getElementById('startModal');
-        const startButton = document.getElementById('startButton');
+        let musicStarted = false;
 
         // گۆڕینی پەیامەکان
         function changeMessage() {
@@ -465,6 +375,7 @@
 
         // گۆڕینی پەیام بە شێوەی خولگەیی
         setInterval(changeMessage, 4000);
+        changeMessage(); // دەستپێکردنی یەکەم پەیام
 
         // دروستکردنی دڵی باکگراوند
         function createHearts() {
@@ -490,54 +401,45 @@
         createHearts();
 
         // فەنکشنی دەستپێکردنی مۆسیقا
-        function playMusic() {
-            audio.play().then(() => {
-                musicStatus.textContent = '🎵 مۆسیقا لە کاردایە...';
-                musicStatus.style.color = '#ffb6c1';
-            }).catch(err => {
-                console.error('ناتوانرێت مۆسیقا بخرێتە کار:', err);
-                musicStatus.textContent = '❌ ناتوانرێت مۆسیقا بخرێتە کار';
-                musicStatus.style.color = '#ff6b6b';
-            });
+        function startMusic() {
+            if (!musicStarted) {
+                audio.play().then(() => {
+                    musicStarted = true;
+                    musicStatus.textContent = '🎵 مۆسیقا لە کاردایە...';
+                    musicStatus.style.color = '#ffb6c1';
+                }).catch(err => {
+                    console.error('ناتوانرێت مۆسیقا بخرێتە کار:', err);
+                    musicStatus.textContent = '❌ ناتوانرێت مۆسیقا بخرێتە کار - کلیک بکە';
+                    musicStatus.style.color = '#ff6b6b';
+                });
+            }
         }
 
-        // کلیک لەسەر دوگمەی دەستپێکردن
-        startButton.addEventListener('click', () => {
-            // دەستپێکردنی مۆسیقا
-            playMusic();
-            
-            // لابردنی مۆداڵ
-            startModal.style.opacity = '0';
-            startModal.style.transition = 'opacity 0.5s ease';
-            
-            setTimeout(() => {
-                startModal.style.display = 'none';
-            }, 500);
-        });
+        // کلیک لەسەر دۆخی مۆسیقا
+        musicStatus.addEventListener('click', startMusic);
 
-        // خۆکارانە کلیک لەسەر دوگمەی دەستپێکردن دوای 1 چرکە
+        // کلیک لە هەر شوێنێکی پەڕەکە
+        document.addEventListener('click', startMusic);
+
+        // هەوڵی خۆکارانە بۆ دەستپێکردنی مۆسیقا
+        // بەڵام وێبگەڕەکان ڕێگە نادەن بەبێ کلیک
         setTimeout(() => {
-            // هەوڵی دەستپێکردنی مۆسیقا بە شێوەی خۆکارانە
-            playMusic();
-            
-            // لابردنی مۆداڵ بە شێوەی خۆکارانە
-            startModal.style.opacity = '0';
-            startModal.style.transition = 'opacity 0.5s ease';
-            
-            setTimeout(() => {
-                startModal.style.display = 'none';
-            }, 500);
+            // دروستکردنی کلیکی خۆکارانە
+            const autoClickEvent = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: true
+            });
+            document.dispatchEvent(autoClickEvent);
+        }, 500);
+
+        // هەوڵی دووبارە
+        setTimeout(() => {
+            startMusic();
         }, 1000);
 
-        // ئەگەر بەکارهێنەر لە هەر شوێنێک کلیک بکات، مۆسیقا دەست پێدەکات
-        document.addEventListener('click', function autoPlayOnClick() {
-            if (audio.paused) {
-                playMusic();
-            }
-        });
-
-        // دەستپێکردنی پەیامی یەکەم
-        changeMessage();
+        // کلیک لەسەر وێنەکە بۆ دەستپێکردنی مۆسیقا
+        document.getElementById('mainImage').addEventListener('click', startMusic);
     </script>
 </body>
 </html>
