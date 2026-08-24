@@ -3,29 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ڕایان ❤️</title>
+    <title>رەیان - وتە جوانەکان</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap');
-
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Kurdish:wght@400;700;900&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Noto Naskh Arabic', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #1a1a2e 100%);
+            font-family: 'Noto Kurdish', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             position: relative;
-            cursor: pointer;
         }
-
-        /* ئەنیمەیشنی ئەستێرەکان */
+        
+        /* ئەستێرەکان */
         .stars {
             position: fixed;
             top: 0;
@@ -35,324 +34,356 @@
             pointer-events: none;
             z-index: 1;
         }
-
+        
         .star {
             position: absolute;
             width: 3px;
             height: 3px;
             background: white;
             border-radius: 50%;
-            animation: twinkle 1.5s infinite ease-in-out;
+            animation: twinkle 2s infinite;
         }
-
+        
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.5); }
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
-
+        
         .container {
-            text-align: center;
-            padding: 40px;
             position: relative;
             z-index: 2;
-            max-width: 700px;
             width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            text-align: center;
         }
-
+        
+        .image-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            animation: glow 3s infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.8); }
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
         .heart-icon {
-            font-size: 60px;
-            animation: heartbeat 1.5s infinite ease-in-out;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 20px rgba(255, 0, 100, 0.8));
+            font-size: 50px;
+            margin: 20px 0;
+            animation: heartbeat 1.5s infinite;
         }
-
+        
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
             25% { transform: scale(1.2); }
             50% { transform: scale(1.1); }
-            75% { transform: scale(1.3); }
+            75% { transform: scale(1.15); }
         }
-
-        .quote-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 40px 30px;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            animation: fadeInUp 1s ease-out;
-            transition: all 0.5s ease;
+        
+        .quote-box {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
             position: relative;
-            overflow: hidden;
-            cursor: pointer;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .quote-card:hover {
-            border-color: rgba(255, 100, 150, 0.6);
-            box-shadow: 0 25px 60px rgba(255, 0, 100, 0.3);
-            transform: translateY(-5px);
-        }
-
-        .quote-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(
-                from 0deg,
-                transparent 0deg,
-                rgba(255, 100, 150, 0.1) 60deg,
-                transparent 120deg,
-                rgba(255, 200, 100, 0.1) 180deg,
-                transparent 240deg,
-                rgba(100, 150, 255, 0.1) 300deg,
-                transparent 360deg
-            );
-            animation: rotate 10s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        
         .quote-text {
-            font-size: 28px;
-            font-weight: 700;
-            color: #ffffff;
-            line-height: 1.8;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            animation: textGlow 2s infinite ease-in-out;
-        }
-
-        @keyframes textGlow {
-            0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
-            50% { text-shadow: 0 0 40px rgba(255, 150, 200, 0.8); }
-        }
-
-        .name-highlight {
-            color: #ff6b9d;
-            font-weight: bold;
-            font-size: 32px;
-            text-shadow: 0 0 30px rgba(255, 107, 157, 0.8);
-            animation: namePulse 2s infinite ease-in-out;
-            display: inline-block;
-        }
-
-        @keyframes namePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .date-badge {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #ff6b9d, #ff8e53);
-            border-radius: 50px;
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 24px;
             color: white;
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
-            animation: badgePulse 2s infinite ease-in-out;
-            position: relative;
-            z-index: 2;
+            line-height: 1.8;
+            font-weight: 700;
+            transition: all 0.5s ease;
         }
-
-        @keyframes badgePulse {
-            0%, 100% { box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4); }
-            50% { box-shadow: 0 10px 50px rgba(255, 107, 157, 0.8); }
+        
+        .rayan-name {
+            color: #ffd700;
+            font-size: 32px;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            animation: shine 2s infinite;
         }
-
-        .sound-indicator {
+        
+        @keyframes shine {
+            0%, 100% { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700; }
+            50% { text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700, 0 0 60px #ffd700; }
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+            color: #333;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Noto Kurdish', sans-serif;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        /* کۆنترۆڵی دەنگ */
+        .sound-control {
             position: fixed;
-            bottom: 30px;
-            left: 30px;
+            bottom: 20px;
+            right: 20px;
             z-index: 100;
-            animation: soundWave 1.5s infinite ease-in-out;
         }
-
-        @keyframes soundWave {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 1; }
+        
+        .sound-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Noto Kurdish', sans-serif;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
-
-        .particle {
+        
+        .sound-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* دیزاینی بەفر */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 20px;
+            animation: fall linear infinite;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
+        .hidden-video {
+            display: none;
             position: absolute;
-            bottom: -10px;
-            border-radius: 50%;
-            animation: floatUp 4s infinite ease-out;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
             pointer-events: none;
         }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) scale(0);
-                opacity: 0;
-            }
-        }
-
+        
         @media (max-width: 768px) {
-            .quote-text {
-                font-size: 20px;
-            }
-            .name-highlight {
-                font-size: 24px;
-            }
             .container {
                 padding: 20px;
+                margin: 10px;
             }
-            .quote-card {
-                padding: 25px 20px;
+            
+            .quote-text {
+                font-size: 18px;
             }
-            .date-badge {
-                font-size: 16px;
-                padding: 10px 20px;
+            
+            .rayan-name {
+                font-size: 24px;
+            }
+            
+            .image-container {
+                width: 150px;
+                height: 150px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- دەنگی ڤیدۆکە (شاراوە) -->
-    <video id="bg-audio" style="display: none;" autoplay loop muted playsinline>
-        <source src="https://raw.githubusercontent.com/farzadkhdr/rayanmm/main/v1c044g50000da47pdvog65mtpdgmb00.mp4" type="video/mp4">
+    <!-- ڤیدیۆی شاراوە بۆ دەنگ -->
+    <video class="hidden-video" id="bg-audio" loop>
+        <source src="https://github.com/farzadkhdr/rayanmm/blob/main/v1c044g50000da47pdvog65mtpdgmb00.mp4" type="video/mp4">
     </video>
-
-    <!-- ئەستێرەکان -->
+    
     <div class="stars" id="stars"></div>
-
-    <!-- نیشاندەری دەنگ -->
-    <div class="sound-indicator">🎵</div>
-
-    <div class="container" id="mainContainer">
-        <div class="heart-icon">💖</div>
+    
+    <div class="container">
+        <div class="image-container">
+            <img src="https://github.com/farzadkhdr/rayanmm/blob/main/IMG_9324.jpeg" alt="رەیان">
+        </div>
         
-        <div class="quote-card" id="quoteCard">
-            <p class="quote-text" id="quoteText">
-                <span class="name-highlight">ڕایان</span>، تۆ خۆشترین بەشی ژیانمی ❤️
-            </p>
-            <div class="date-badge">🗓️ چاوەڕوانی مانگی ١١</div>
+        <div class="heart-icon">❤️</div>
+        
+        <div class="quote-box">
+            <div class="quote-text" id="quote-text">
+                سڵاو <span class="rayan-name">رەیان</span>! ❤️
+            </div>
+        </div>
+        
+        <div>
+            <button class="btn" onclick="showNextQuote()">وتەی داهاتوو 🔄</button>
+            <button class="btn" onclick="startProposal()">پێشنیارە تایبەتەکە 💍</button>
         </div>
     </div>
-
+    
+    <div class="sound-control">
+        <button class="sound-btn" onclick="toggleSound()">🔊 دەنگ</button>
+    </div>
+    
     <script>
-        // وتەکان
         const quotes = [
-            `<span class="name-highlight">ڕایان</span>، هەموو ڕۆژێکم بە بیرکردنەوە لە تۆ دەست پێدەکات ❤️`,
-            `تۆ <span class="name-highlight">ڕایان</span>، جوانترین بەشی چیرۆکی ژیانمی ✨`,
-            `هەر کاتێک دەتبینم، دڵم خێراتر لێدەدات <span class="name-highlight">ڕایان</span> 💕`,
-            `<span class="name-highlight">ڕایان</span>، مانگی ١١ بەڵێنی خۆشەویستی و نزیکبوونەوەیە 🌙`,
-            `لە هەموو دونیا، تەنها تۆ بەسم <span class="name-highlight">ڕایان</span> 🌹`,
-            `خەونەکانم هەموویان بە تۆوە جوانترن <span class="name-highlight">ڕایان</span> 💫`,
-            `<span class="name-highlight">ڕایان</span>، تۆ وەک مانگێکی پڕ لەشەوی تاریکدا درەوشاوەیتەوە 🌕`,
-            `دڵم بە تۆوە بەندە <span class="name-highlight">ڕایان</span>، بۆ هەمیشە 🔒❤️`,
-            `هەر وشەیەک کە دەینوسم، ناوی تۆی تێدایە <span class="name-highlight">ڕایان</span> ✍️`,
-            `<span class="name-highlight">ڕایان</span>، چاوەڕوانی دیدارتن لە مانگی ١١ دڵم ڕادەکێشێت 🎯`
+            `ئەی <span class="rayan-name">رەیان</span>، تۆ وەک ئەستێرەیەکی درەوشاوە لە ئاسمانی ژیانمدا ✨`,
+            `<span class="rayan-name">رەیان</span>، هەموو ڕۆژێک لەگەڵ تۆ وەک خەونێکی جوانە 💫`,
+            `جوانی ناوی <span class="rayan-name">رەیان</span> وەک جوانی ڕوخساری تۆیە 🌹`,
+            `ئەی <span class="rayan-name">رەیان</span>ی دلنیازم، تۆ جوانترین بەشی ژیانمی ❤️`,
+            `<span class="rayan-name">رەیان</span>، دەستم بگرە و با پێکەوە ژیانێکی جوان دروست بکەین 🤝`,
+            `هەر کاتێک ناوی <span class="rayan-name">رەیان</span> دەبیسم، دڵم لە شادی دەتەکێت 💖`,
+            `ئەی <span class="rayan-name">رەیان</span>، تۆ گوڵێکی جوانی لە باخچەی ژیانمدا 🌸`
         ];
-
+        
         let currentQuoteIndex = 0;
-        let audioEnabled = false;
-
+        let audioInitialized = false;
+        
         // دروستکردنی ئەستێرەکان
         function createStars() {
             const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 50; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
                 star.style.animationDelay = Math.random() * 2 + 's';
-                star.style.animationDuration = (1 + Math.random() * 2) + 's';
                 starsContainer.appendChild(star);
             }
         }
-
-        // دروستکردنی پەڕە دڵ
-        function createParticles() {
-            const container = document.getElementById('mainContainer');
-            const heartEmojis = ['❤️', '💕', '💖', '💗', '💓', '🌸', '✨', '💝'];
-            
+        
+        // دروستکردنی بەفر
+        function createSnowflakes() {
             setInterval(() => {
-                const particle = document.createElement('span');
-                particle.className = 'particle';
-                particle.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.fontSize = (15 + Math.random() * 25) + 'px';
-                particle.style.animationDuration = (3 + Math.random() * 3) + 's';
-                container.appendChild(particle);
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = '❄';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+                snowflake.style.fontSize = Math.random() * 15 + 10 + 'px';
+                document.body.appendChild(snowflake);
                 
                 setTimeout(() => {
-                    particle.remove();
+                    snowflake.remove();
                 }, 5000);
             }, 500);
         }
-
+        
         // گۆڕینی وتەکان
-        function changeQuote() {
-            const quoteText = document.getElementById('quoteText');
-            const quoteCard = document.getElementById('quoteCard');
-            
-            quoteCard.style.animation = 'none';
-            quoteCard.offsetHeight;
-            quoteCard.style.animation = 'fadeInUp 0.8s ease-out';
-            
+        function showNextQuote() {
             currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-            quoteText.innerHTML = quotes[currentQuoteIndex];
+            const quoteText = document.getElementById('quote-text');
+            quoteText.style.opacity = '0';
+            
+            setTimeout(() => {
+                quoteText.innerHTML = quotes[currentQuoteIndex];
+                quoteText.style.opacity = '1';
+            }, 300);
         }
-
-        // چالاککردنی دەنگ
-        function enableAudio() {
+        
+        // دەستپێکردنی پێشنیارە تایبەتەکە
+        function startProposal() {
+            const proposalQuotes = [
+                `ئەی <span class="rayan-name">رەیان</span>ی خۆشەویستم... 🌹`,
+                `لەو کاتەوەی ناسیوتمەت، ژیانم ڕەنگێکی تری وەرگرتووە 💕`,
+                `ئەی <span class="rayan-name">رەیان</span>، دەزانم مانگی ١١ دێیت بۆ خوازبینی... 💍`,
+                `دەمەوێت بڵێم کە تۆ باشترین هەڵبژاردەی ژیانمی ❤️`,
+                `ئەی <span class="rayan-name">رەیان</span>، ئایا دەبیتە هاوسەری من؟ 💑`,
+                `بە هەموو دڵ و گیانمەوە چاوەڕێت دەکەم <span class="rayan-name">رەیان</span> 💖`
+            ];
+            
+            let index = 0;
+            const quoteText = document.getElementById('quote-text');
+            
+            function showProposalQuote() {
+                if (index < proposalQuotes.length) {
+                    quoteText.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        quoteText.innerHTML = proposalQuotes[index];
+                        quoteText.style.opacity = '1';
+                        index++;
+                        
+                        setTimeout(showProposalQuote, 2500);
+                    }, 300);
+                }
+            }
+            
+            showProposalQuote();
+        }
+        
+        // کۆنترۆڵکردنی دەنگ
+        function toggleSound() {
             const video = document.getElementById('bg-audio');
-            if (!audioEnabled) {
-                video.muted = false;
+            
+            if (!audioInitialized) {
+                video.load();
                 video.volume = 0.5;
-                video.play().then(() => {
-                    audioEnabled = true;
-                    document.querySelector('.sound-indicator').textContent = '🎵';
-                }).catch(err => {
-                    console.log('دەنگ نەتوانرا بلیتەوە:', err);
-                });
+                video.play().catch(e => console.log('چاوەڕوانی کلیک بکە'));
+                audioInitialized = true;
+            }
+            
+            if (video.paused) {
+                video.play();
+                document.querySelector('.sound-btn').innerHTML = '🔊 دەنگ';
+            } else {
+                video.pause();
+                document.querySelector('.sound-btn').innerHTML = '🔇 بێدەنگ';
             }
         }
-
-        // دەستپێکردنی دەنگ لە یەکەم کلیکدا
-        document.body.addEventListener('click', enableAudio);
-
-        // گۆڕینی وتە لە هەر کلیکێکدا
-        document.getElementById('quoteCard').addEventListener('click', function(e) {
-            e.stopPropagation();
-            changeQuote();
+        
+        // دەستپێکردنی دەنگ بە یەکەم کلیک
+        document.addEventListener('click', function() {
+            if (!audioInitialized) {
+                const video = document.getElementById('bg-audio');
+                video.load();
+                video.volume = 0.3;
+                video.play().catch(e => console.log('ناکرێت دەنگ لێبدرێت'));
+                audioInitialized = true;
+            }
         });
-
-        // ئەنیمەیشنی خۆکار بۆ گۆڕینی وتەکان
-        setInterval(changeQuote, 5000);
-
+        
         // دەستپێکردن
         createStars();
-        createParticles();
-
-        // لە یەکەم کلیکدا دەنگ دەست پێدەکات و وتەکان دەگۆڕدرێن
-        console.log('💖 ڕایان، تۆ خۆشەویستترین کەسی ژیانمی!');
+        createSnowflakes();
+        
+        // گۆڕینی خۆکارانەی وتەکان هەر ٥ چرکە
+        setInterval(showNextQuote, 5000);
     </script>
 </body>
 </html>
