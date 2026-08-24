@@ -22,9 +22,136 @@
             align-items: center;
             overflow: hidden;
             position: relative;
-            cursor: pointer;
         }
 
+        /* شاشەی دەستپێکردن */
+        .start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.8s ease;
+        }
+
+        .start-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.2);
+        }
+
+        .start-content {
+            text-align: center;
+            padding: 40px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .start-heart {
+            font-size: 80px;
+            animation: bigHeartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes bigHeartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.3); }
+        }
+
+        .start-title {
+            color: #ffb6c1;
+            font-size: 3rem;
+            margin: 20px 0;
+            text-shadow: 0 0 30px rgba(255, 182, 193, 0.8);
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% {
+                text-shadow: 0 0 30px rgba(255, 182, 193, 0.8);
+            }
+            50% {
+                text-shadow: 0 0 50px rgba(255, 182, 193, 1),
+                             0 0 80px rgba(255, 105, 180, 0.6);
+            }
+        }
+
+        .start-subtitle {
+            color: #ffd1dc;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .start-button {
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-family: 'Noto Kurdish', sans-serif;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.5);
+            animation: buttonPulse 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                box-shadow: 0 10px 40px rgba(255, 105, 180, 0.5);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 15px 50px rgba(255, 105, 180, 0.8);
+                transform: scale(1.05);
+            }
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.8);
+        }
+
+        .start-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.6);
+        }
+
+        /* ناوەڕۆکی سەرەکی */
         .hearts-bg {
             position: fixed;
             top: 0;
@@ -66,7 +193,12 @@
             padding: 30px;
             max-width: 500px;
             width: 90%;
-            pointer-events: none;
+            opacity: 0;
+            transition: all 1s ease;
+        }
+
+        .container.visible {
+            opacity: 1;
         }
 
         .card {
@@ -78,7 +210,6 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 
                         0 0 80px rgba(255, 105, 180, 0.15);
             animation: cardGlow 3s ease-in-out infinite;
-            pointer-events: none;
         }
 
         @keyframes cardGlow {
@@ -171,16 +302,6 @@
             animation: textGlow 2s ease-in-out infinite;
         }
 
-        @keyframes textGlow {
-            0%, 100% {
-                text-shadow: 0 0 20px rgba(255, 182, 193, 0.6);
-            }
-            50% {
-                text-shadow: 0 0 40px rgba(255, 182, 193, 0.9),
-                             0 0 80px rgba(255, 105, 180, 0.5);
-            }
-        }
-
         .message-box {
             margin-top: 20px;
             padding: 20px;
@@ -252,12 +373,18 @@
             color: #ffb6c1;
             font-size: 0.9rem;
             margin-top: 10px;
-            transition: all 0.3s ease;
             padding: 10px;
             border-radius: 10px;
         }
 
         @media (max-width: 480px) {
+            .start-title {
+                font-size: 2rem;
+            }
+            .start-button {
+                padding: 15px 35px;
+                font-size: 1.2rem;
+            }
             .main-image {
                 width: 180px;
                 height: 180px;
@@ -272,11 +399,23 @@
     </style>
 </head>
 <body>
+    <!-- شاشەی دەستپێکردن -->
+    <div class="start-screen" id="startScreen">
+        <div class="start-content">
+            <div class="start-heart">❤️</div>
+            <h1 class="start-title">ڕەیان</h1>
+            <p class="start-subtitle">بۆ دەستپێکردنی ئەزموونە ڕۆمانسییەکە کلیک بکە</p>
+            <button class="start-button" id="startButton">
+                💕 دەستپێکردن 💕
+            </button>
+        </div>
+    </div>
+
     <!-- دڵی باکگراوند -->
     <div class="hearts-bg" id="heartsBg"></div>
 
     <!-- کۆنتەینەری سەرەکی -->
-    <div class="container">
+    <div class="container" id="mainContainer">
         <div class="card">
             <!-- وێنە -->
             <div class="image-wrapper">
@@ -286,7 +425,6 @@
                     src="https://raw.githubusercontent.com/farzadkhdr/rayanmm/main/IMG_9324.jpeg" 
                     alt="ڕەیان" 
                     class="main-image"
-                    id="mainImage"
                     crossorigin="anonymous"
                 >
                 <span class="heart-icon">❤️</span>
@@ -312,12 +450,12 @@
             </div>
 
             <!-- دۆخی مۆسیقا -->
-            <p class="music-status" id="musicStatus">🎵 مۆسیقا بە شێوەی خۆکارانە دەست پێدەکات...</p>
+            <p class="music-status" id="musicStatus">🎵 مۆسیقا لە کاردایە...</p>
         </div>
     </div>
 
     <!-- دەنگی شاراوە -->
-    <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
+    <audio id="bgMusic" loop preload="auto">
         <source src="https://github.com/farzadkhdr/rayanmm/raw/main/v1c044g50000da47pdvog65mtpdgmb00.mov" type="video/quicktime">
         <source src="https://github.com/farzadkhdr/rayanmm/raw/main/v1c044g50000da47pdvog65mtpdgmb00.mov" type="audio/mp4">
         <source src="https://github.com/farzadkhdr/rayanmm/raw/main/v1c044g50000da47pdvog65mtpdgmb00.mov" type="audio/mpeg">
@@ -352,8 +490,10 @@
         const messageElement = document.getElementById('message');
         const audio = document.getElementById('bgMusic');
         const musicStatus = document.getElementById('musicStatus');
-        let musicStarted = false;
-        let autoClickAttempted = false;
+        const startScreen = document.getElementById('startScreen');
+        const startButton = document.getElementById('startButton');
+        const mainContainer = document.getElementById('mainContainer');
+        let isMusicPlaying = false;
 
         // گۆڕینی پەیامەکان
         function changeMessage() {
@@ -366,9 +506,11 @@
             }, 500);
         }
 
-        // گۆڕینی پەیام بە شێوەی خولگەیی
-        setInterval(changeMessage, 4000);
-        changeMessage();
+        // دەستپێکردنی گۆڕینی پەیامەکان دوای دەستپێکردن
+        function startMessageRotation() {
+            changeMessage();
+            setInterval(changeMessage, 4000);
+        }
 
         // دروستکردنی دڵی باکگراوند
         function createHearts() {
@@ -390,136 +532,83 @@
             }, 500);
         }
 
+        // دەستپێکردنی دڵەکان
         createHearts();
 
         // فەنکشنی دەستپێکردنی مۆسیقا
         function startMusic() {
-            if (musicStarted) return;
+            if (isMusicPlaying) return;
             
-            console.log('Attempting to start music...');
+            console.log('دەستپێکردنی مۆسیقا...');
             
-            // هەوڵی یەکەم: بە شێوەی ئاسایی
             audio.play().then(() => {
-                musicStarted = true;
+                isMusicPlaying = true;
                 musicStatus.textContent = '🎵 مۆسیقا لە کاردایە...';
                 musicStatus.style.color = '#ffb6c1';
-                console.log('Music started successfully');
+                console.log('مۆسیقا بە سەرکەوتوویی دەستی پێکرد');
             }).catch(err => {
-                console.log('Direct play failed:', err);
+                console.error('هەڵە لە دەستپێکردنی مۆسیقا:', err);
                 
-                // هەوڵی دووەم: بە mute و دواتر unmute
+                // هەوڵی دووەم
                 audio.muted = true;
                 audio.play().then(() => {
-                    console.log('Playing muted...');
-                    // هەوڵی لابردنی mute
                     setTimeout(() => {
                         audio.muted = false;
-                        musicStarted = true;
+                        isMusicPlaying = true;
                         musicStatus.textContent = '🎵 مۆسیقا لە کاردایە...';
                         musicStatus.style.color = '#ffb6c1';
-                        console.log('Music unmuted and playing');
+                        console.log('مۆسیقا بە mute دەستی پێکرد');
                     }, 100);
                 }).catch(err2 => {
-                    console.log('Muted play failed:', err2);
-                    
-                    // هەوڵی سێیەم: دروستکردنی AudioContext
-                    try {
-                        const AudioContext = window.AudioContext || window.webkitAudioContext;
-                        const audioContext = new AudioContext();
-                        
-                        fetch('https://github.com/farzadkhdr/rayanmm/raw/main/v1c044g50000da47pdvog65mtpdgmb00.mov')
-                            .then(response => response.arrayBuffer())
-                            .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
-                            .then(audioBuffer => {
-                                const source = audioContext.createBufferSource();
-                                source.buffer = audioBuffer;
-                                source.loop = true;
-                                source.connect(audioContext.destination);
-                                source.start(0);
-                                
-                                musicStarted = true;
-                                musicStatus.textContent = '🎵 مۆسیقا لە کاردایە...';
-                                musicStatus.style.color = '#ffb6c1';
-                                console.log('Music playing via AudioContext');
-                            })
-                            .catch(fetchErr => {
-                                console.error('AudioContext failed:', fetchErr);
-                                musicStatus.textContent = '❌ ناتوانرێت مۆسیقا بخرێتە کار - فایلەکە بگۆڕە بۆ MP3';
-                                musicStatus.style.color = '#ff6b6b';
-                            });
-                    } catch (audioContextErr) {
-                        console.error('AudioContext not supported:', audioContextErr);
-                        musicStatus.textContent = '❌ ناتوانرێت مۆسیقا بخرێتە کار - فایلەکە بگۆڕە بۆ MP3';
-                        musicStatus.style.color = '#ff6b6b';
-                    }
+                    console.error('هەڵەی دووەم:', err2);
+                    musicStatus.textContent = '❌ ناتوانرێت مۆسیقا بخرێتە کار - تکایە فایلەکە بگۆڕە بۆ MP3';
+                    musicStatus.style.color = '#ff6b6b';
                 });
             });
         }
 
-        // فەنکشنی دروستکردنی کلیکی خۆکارانە
-        function createAutoClick() {
-            if (autoClickAttempted) return;
-            autoClickAttempted = true;
-            
-            console.log('Creating auto click...');
-            
-            // دروستکردنی کلیکی خۆکارانە لەسەر body
-            const clickEvent = new MouseEvent('click', {
-                view: window,
-                bubbles: true,
-                cancelable: true,
-                clientX: window.innerWidth / 2,
-                clientY: window.innerHeight / 2
-            });
-            
-            // ناردنی کلیک بۆ document
-            document.dispatchEvent(clickEvent);
-            
-            // هەوڵی ڕاستەوخۆ بۆ دەستپێکردنی مۆسیقا
+        // فەنکشنی دەستپێکردنی هەموو شتێک
+        function startEverything() {
+            // دەستپێکردنی مۆسیقا
             startMusic();
+            
+            // لابردنی شاشەی دەستپێکردن
+            startScreen.classList.add('hidden');
+            
+            // پیشاندانی ناوەڕۆکی سەرەکی
+            setTimeout(() => {
+                mainContainer.classList.add('visible');
+                // دەستپێکردنی گۆڕینی پەیامەکان
+                startMessageRotation();
+            }, 500);
+            
+            // لابردنی شاشەی دەستپێکردن لە دوای 1 چرکە
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+            }, 1000);
         }
 
-        // دروستکردنی کلیکی خۆکارانە لە چەند کاتێکی جیاوازدا
-        setTimeout(createAutoClick, 100);    // دوای 0.1 چرکە
-        setTimeout(createAutoClick, 500);    // دوای 0.5 چرکە
-        setTimeout(createAutoClick, 1000);   // دوای 1 چرکە
-        setTimeout(createAutoClick, 2000);   // دوای 2 چرکە
-        setTimeout(createAutoClick, 3000);   // دوای 3 چرکە
-
-        // هەوڵی بەردەوام بۆ دەستپێکردنی مۆسیقا
-        const musicInterval = setInterval(() => {
-            if (!musicStarted) {
-                console.log('Still trying to start music...');
-                startMusic();
-            } else {
-                clearInterval(musicInterval);
-            }
-        }, 500);
-
-        // کلیکی ڕاستەقینەی بەکارهێنەر
-        document.addEventListener('click', function() {
-            if (!musicStarted) {
-                startMusic();
-            }
+        // کلیک لەسەر دوگمەی دەستپێکردن
+        startButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            startEverything();
         });
 
         // چاودێری کردنی دۆخی مۆسیقا
         audio.addEventListener('playing', function() {
-            musicStarted = true;
+            isMusicPlaying = true;
             musicStatus.textContent = '🎵 مۆسیقا لە کاردایە...';
             musicStatus.style.color = '#ffb6c1';
-            clearInterval(musicInterval);
         });
 
         audio.addEventListener('error', function(e) {
-            console.error('Audio loading error:', e);
-            musicStatus.textContent = '❌ هەڵەیەک لە بارکردنی فایلەکەدا ڕوویدا';
+            console.error('هەڵەی بارکردنی دەنگ:', e);
+            musicStatus.textContent = '❌ هەڵەیەک لە بارکردنی فایلەکەدا ڕوویدا - فایلەکە بگۆڕە بۆ MP3';
             musicStatus.style.color = '#ff6b6b';
         });
 
-        // دەستپێکردنی سەرەتایی
-        console.log('Page loaded, attempting auto-start music...');
-        startMusic();
+        console.log('پەڕە بارکرا، چاوەڕوانی کلیکی بەکارهێنەر...');
     </script>
 </body>
 </html>
