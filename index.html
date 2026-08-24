@@ -22,9 +22,9 @@
             align-items: center;
             overflow: hidden;
             position: relative;
+            cursor: pointer;
         }
 
-        /* دڵی بچووک لە باکگراوند */
         .hearts-bg {
             position: fixed;
             top: 0;
@@ -66,6 +66,7 @@
             padding: 30px;
             max-width: 500px;
             width: 90%;
+            pointer-events: none;
         }
 
         .card {
@@ -77,6 +78,7 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 
                         0 0 80px rgba(255, 105, 180, 0.15);
             animation: cardGlow 3s ease-in-out infinite;
+            pointer-events: none;
         }
 
         @keyframes cardGlow {
@@ -117,12 +119,6 @@
                 box-shadow: 0 0 60px rgba(255, 105, 180, 0.7),
                             0 0 120px rgba(255, 105, 180, 0.4);
             }
-        }
-
-        .main-image:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 80px rgba(255, 105, 180, 0.8),
-                        0 0 160px rgba(255, 105, 180, 0.5);
         }
 
         .love-ring {
@@ -257,13 +253,8 @@
             font-size: 0.9rem;
             margin-top: 10px;
             transition: all 0.3s ease;
-            cursor: pointer;
             padding: 10px;
             border-radius: 10px;
-        }
-
-        .music-status:hover {
-            background: rgba(255, 255, 255, 0.1);
         }
 
         @media (max-width: 480px) {
@@ -296,6 +287,7 @@
                     alt="ڕەیان" 
                     class="main-image"
                     id="mainImage"
+                    crossorigin="anonymous"
                 >
                 <span class="heart-icon">❤️</span>
             </div>
@@ -319,16 +311,16 @@
                 <div class="music-bar"></div>
             </div>
 
-            <!-- دۆخی مۆسیقا - کلیک بکە بۆ دەستپێکردن -->
-            <p class="music-status" id="musicStatus">🎵 کلیک بکە بۆ دەستپێکردنی مۆسیقا</p>
+            <!-- دۆخی مۆسیقا -->
+            <p class="music-status" id="musicStatus">🎵 مۆسیقا بە شێوەی خۆکارانە دەست پێدەکات...</p>
         </div>
     </div>
 
-    <!-- دەنگی شاراوە (ڤیدیۆی .mov) -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://raw.githubusercontent.com/farzadkhdr/rayanmm/main/v1c044g50000da47pdvog65mtpdgmb00.mov" type="video/quicktime">
-        <source src="https://raw.githubusercontent.com/farzadkhdr/rayanmm/main/v1c044g50000da47pdvog65mtpdgmb00.mov" type="audio/mp4">
-        <source src="https://raw.githubusercontent.com/farzadkhdr/rayanmm/main/v1c044g50000da47pdvog65mtpdgmb00.mov" type="audio/mpeg">
+    <!-- دەنگی شاراوە -->
+    <audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
+        <source src="https://github.com/farzadkhdr/rayanmm/raw/main/v1c044g50000da47pdvog65mtpdgmb00.mov" type="video/quicktime">
+        <source src="https://github.com/farzadkhdr/rayanmm/raw/main/v1c044g50000da47pdvog65mtpdgmb00.mov" type="audio/mp4">
+        <source src="https://github.com/farzadkhdr/rayanmm/raw/main/v1c044g50000da47pdvog65mtpdgmb00.mov" type="audio/mpeg">
     </audio>
 
     <script>
@@ -361,6 +353,7 @@
         const audio = document.getElementById('bgMusic');
         const musicStatus = document.getElementById('musicStatus');
         let musicStarted = false;
+        let autoClickAttempted = false;
 
         // گۆڕینی پەیامەکان
         function changeMessage() {
@@ -375,7 +368,7 @@
 
         // گۆڕینی پەیام بە شێوەی خولگەیی
         setInterval(changeMessage, 4000);
-        changeMessage(); // دەستپێکردنی یەکەم پەیام
+        changeMessage();
 
         // دروستکردنی دڵی باکگراوند
         function createHearts() {
@@ -397,49 +390,136 @@
             }, 500);
         }
 
-        // دەستپێکردنی دڵەکان
         createHearts();
 
         // فەنکشنی دەستپێکردنی مۆسیقا
         function startMusic() {
-            if (!musicStarted) {
+            if (musicStarted) return;
+            
+            console.log('Attempting to start music...');
+            
+            // هەوڵی یەکەم: بە شێوەی ئاسایی
+            audio.play().then(() => {
+                musicStarted = true;
+                musicStatus.textContent = '🎵 مۆسیقا لە کاردایە...';
+                musicStatus.style.color = '#ffb6c1';
+                console.log('Music started successfully');
+            }).catch(err => {
+                console.log('Direct play failed:', err);
+                
+                // هەوڵی دووەم: بە mute و دواتر unmute
+                audio.muted = true;
                 audio.play().then(() => {
-                    musicStarted = true;
-                    musicStatus.textContent = '🎵 مۆسیقا لە کاردایە...';
-                    musicStatus.style.color = '#ffb6c1';
-                }).catch(err => {
-                    console.error('ناتوانرێت مۆسیقا بخرێتە کار:', err);
-                    musicStatus.textContent = '❌ ناتوانرێت مۆسیقا بخرێتە کار - کلیک بکە';
-                    musicStatus.style.color = '#ff6b6b';
+                    console.log('Playing muted...');
+                    // هەوڵی لابردنی mute
+                    setTimeout(() => {
+                        audio.muted = false;
+                        musicStarted = true;
+                        musicStatus.textContent = '🎵 مۆسیقا لە کاردایە...';
+                        musicStatus.style.color = '#ffb6c1';
+                        console.log('Music unmuted and playing');
+                    }, 100);
+                }).catch(err2 => {
+                    console.log('Muted play failed:', err2);
+                    
+                    // هەوڵی سێیەم: دروستکردنی AudioContext
+                    try {
+                        const AudioContext = window.AudioContext || window.webkitAudioContext;
+                        const audioContext = new AudioContext();
+                        
+                        fetch('https://github.com/farzadkhdr/rayanmm/raw/main/v1c044g50000da47pdvog65mtpdgmb00.mov')
+                            .then(response => response.arrayBuffer())
+                            .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+                            .then(audioBuffer => {
+                                const source = audioContext.createBufferSource();
+                                source.buffer = audioBuffer;
+                                source.loop = true;
+                                source.connect(audioContext.destination);
+                                source.start(0);
+                                
+                                musicStarted = true;
+                                musicStatus.textContent = '🎵 مۆسیقا لە کاردایە...';
+                                musicStatus.style.color = '#ffb6c1';
+                                console.log('Music playing via AudioContext');
+                            })
+                            .catch(fetchErr => {
+                                console.error('AudioContext failed:', fetchErr);
+                                musicStatus.textContent = '❌ ناتوانرێت مۆسیقا بخرێتە کار - فایلەکە بگۆڕە بۆ MP3';
+                                musicStatus.style.color = '#ff6b6b';
+                            });
+                    } catch (audioContextErr) {
+                        console.error('AudioContext not supported:', audioContextErr);
+                        musicStatus.textContent = '❌ ناتوانرێت مۆسیقا بخرێتە کار - فایلەکە بگۆڕە بۆ MP3';
+                        musicStatus.style.color = '#ff6b6b';
+                    }
                 });
-            }
+            });
         }
 
-        // کلیک لەسەر دۆخی مۆسیقا
-        musicStatus.addEventListener('click', startMusic);
-
-        // کلیک لە هەر شوێنێکی پەڕەکە
-        document.addEventListener('click', startMusic);
-
-        // هەوڵی خۆکارانە بۆ دەستپێکردنی مۆسیقا
-        // بەڵام وێبگەڕەکان ڕێگە نادەن بەبێ کلیک
-        setTimeout(() => {
-            // دروستکردنی کلیکی خۆکارانە
-            const autoClickEvent = new MouseEvent('click', {
+        // فەنکشنی دروستکردنی کلیکی خۆکارانە
+        function createAutoClick() {
+            if (autoClickAttempted) return;
+            autoClickAttempted = true;
+            
+            console.log('Creating auto click...');
+            
+            // دروستکردنی کلیکی خۆکارانە لەسەر body
+            const clickEvent = new MouseEvent('click', {
                 view: window,
                 bubbles: true,
-                cancelable: true
+                cancelable: true,
+                clientX: window.innerWidth / 2,
+                clientY: window.innerHeight / 2
             });
-            document.dispatchEvent(autoClickEvent);
+            
+            // ناردنی کلیک بۆ document
+            document.dispatchEvent(clickEvent);
+            
+            // هەوڵی ڕاستەوخۆ بۆ دەستپێکردنی مۆسیقا
+            startMusic();
+        }
+
+        // دروستکردنی کلیکی خۆکارانە لە چەند کاتێکی جیاوازدا
+        setTimeout(createAutoClick, 100);    // دوای 0.1 چرکە
+        setTimeout(createAutoClick, 500);    // دوای 0.5 چرکە
+        setTimeout(createAutoClick, 1000);   // دوای 1 چرکە
+        setTimeout(createAutoClick, 2000);   // دوای 2 چرکە
+        setTimeout(createAutoClick, 3000);   // دوای 3 چرکە
+
+        // هەوڵی بەردەوام بۆ دەستپێکردنی مۆسیقا
+        const musicInterval = setInterval(() => {
+            if (!musicStarted) {
+                console.log('Still trying to start music...');
+                startMusic();
+            } else {
+                clearInterval(musicInterval);
+            }
         }, 500);
 
-        // هەوڵی دووبارە
-        setTimeout(() => {
-            startMusic();
-        }, 1000);
+        // کلیکی ڕاستەقینەی بەکارهێنەر
+        document.addEventListener('click', function() {
+            if (!musicStarted) {
+                startMusic();
+            }
+        });
 
-        // کلیک لەسەر وێنەکە بۆ دەستپێکردنی مۆسیقا
-        document.getElementById('mainImage').addEventListener('click', startMusic);
+        // چاودێری کردنی دۆخی مۆسیقا
+        audio.addEventListener('playing', function() {
+            musicStarted = true;
+            musicStatus.textContent = '🎵 مۆسیقا لە کاردایە...';
+            musicStatus.style.color = '#ffb6c1';
+            clearInterval(musicInterval);
+        });
+
+        audio.addEventListener('error', function(e) {
+            console.error('Audio loading error:', e);
+            musicStatus.textContent = '❌ هەڵەیەک لە بارکردنی فایلەکەدا ڕوویدا';
+            musicStatus.style.color = '#ff6b6b';
+        });
+
+        // دەستپێکردنی سەرەتایی
+        console.log('Page loaded, attempting auto-start music...');
+        startMusic();
     </script>
 </body>
 </html>
