@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رەیان - وتە جوانەکان</title>
+    <title>ڕەیان ❤️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Kurdish:wght@400;700;900&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Kurdish:wght@400;700&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Noto Kurdish', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,9 +23,9 @@
             overflow: hidden;
             position: relative;
         }
-        
-        /* ئەستێرەکان */
-        .stars {
+
+        /* دڵی بچووک لە باکگراوند */
+        .hearts-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -34,356 +34,392 @@
             pointer-events: none;
             z-index: 1;
         }
-        
-        .star {
+
+        .heart-particle {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 2s infinite;
+            animation: floatUp linear infinite;
+            opacity: 0;
+            font-size: 20px;
         }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2); }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1) rotate(360deg);
+                opacity: 0;
+            }
         }
-        
+
         .container {
             position: relative;
-            z-index: 2;
-            width: 90%;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            z-index: 10;
             text-align: center;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
         }
-        
-        .image-container {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 30px;
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 35px 25px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 
+                        0 0 80px rgba(255, 105, 180, 0.15);
+            animation: cardGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes cardGlow {
+            0%, 100% {
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 
+                            0 0 80px rgba(255, 105, 180, 0.15);
+            }
+            50% {
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 
+                            0 0 120px rgba(255, 105, 180, 0.3);
+            }
+        }
+
+        .image-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+
+        .main-image {
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
-            overflow: hidden;
-            border: 4px solid #ffd700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-            animation: glow 3s infinite;
-        }
-        
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
-            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.8); }
-        }
-        
-        .image-container img {
-            width: 100%;
-            height: 100%;
             object-fit: cover;
+            border: 4px solid rgba(255, 105, 180, 0.6);
+            box-shadow: 0 0 40px rgba(255, 105, 180, 0.4),
+                        0 0 80px rgba(255, 105, 180, 0.2);
+            animation: imagePulse 2s ease-in-out infinite;
+            transition: all 0.5s ease;
         }
-        
+
+        @keyframes imagePulse {
+            0%, 100% {
+                box-shadow: 0 0 40px rgba(255, 105, 180, 0.4),
+                            0 0 80px rgba(255, 105, 180, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 60px rgba(255, 105, 180, 0.7),
+                            0 0 120px rgba(255, 105, 180, 0.4);
+            }
+        }
+
+        .main-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 80px rgba(255, 105, 180, 0.8),
+                        0 0 160px rgba(255, 105, 180, 0.5);
+        }
+
+        .love-ring {
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            width: calc(100% + 24px);
+            height: calc(100% + 24px);
+            border-radius: 50%;
+            border: 2px dashed rgba(255, 105, 180, 0.5);
+            animation: rotate 10s linear infinite;
+        }
+
+        .love-ring-2 {
+            position: absolute;
+            top: -25px;
+            left: -25px;
+            width: calc(100% + 50px);
+            height: calc(100% + 50px);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 192, 203, 0.3);
+            animation: rotate 15s linear infinite reverse;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         .heart-icon {
-            font-size: 50px;
-            margin: 20px 0;
-            animation: heartbeat 1.5s infinite;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 30px;
+            animation: heartbeat 1.5s ease-in-out infinite;
         }
-        
+
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
             25% { transform: scale(1.2); }
-            50% { transform: scale(1.1); }
-            75% { transform: scale(1.15); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.3); }
         }
-        
-        .quote-box {
-            background: rgba(255, 255, 255, 0.15);
+
+        h1 {
+            color: #ffb6c1;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 182, 193, 0.6);
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(255, 182, 193, 0.6);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(255, 182, 193, 0.9),
+                             0 0 80px rgba(255, 105, 180, 0.5);
+            }
+        }
+
+        .message-box {
+            margin-top: 20px;
+            padding: 20px;
             border-radius: 20px;
-            padding: 30px;
-            margin: 20px 0;
-            position: relative;
-            min-height: 150px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
-        .quote-text {
-            font-size: 24px;
-            color: white;
+
+        .romantic-message {
+            color: #ffd1dc;
+            font-size: 1.2rem;
             line-height: 1.8;
-            font-weight: 700;
-            transition: all 0.5s ease;
-        }
-        
-        .rayan-name {
-            color: #ffd700;
-            font-size: 32px;
-            font-weight: 900;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            display: inline-block;
-            animation: shine 2s infinite;
-        }
-        
-        @keyframes shine {
-            0%, 100% { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700; }
-            50% { text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700, 0 0 60px #ffd700; }
-        }
-        
-        .btn {
-            background: linear-gradient(45deg, #ffd700, #ff8c00);
-            color: #333;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: 'Noto Kurdish', sans-serif;
-            transition: all 0.3s ease;
-            margin: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        /* کۆنترۆڵی دەنگ */
-        .sound-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-        
-        .sound-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid white;
-            color: white;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: 'Noto Kurdish', sans-serif;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-        
-        .sound-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        /* دیزاینی بەفر */
-        .snowflake {
-            position: fixed;
-            top: -10px;
-            color: white;
-            font-size: 20px;
-            animation: fall linear infinite;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.7;
-        }
-        
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
-        }
-        
-        .hidden-video {
-            display: none;
-            position: absolute;
-            width: 1px;
-            height: 1px;
             opacity: 0;
-            pointer-events: none;
+            transition: opacity 1s ease;
+            text-shadow: 0 0 15px rgba(255, 209, 220, 0.5);
         }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-                margin: 10px;
+
+        .romantic-message.active {
+            opacity: 1;
+            animation: messageAppear 1s ease forwards;
+        }
+
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-            
-            .quote-text {
-                font-size: 18px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-            
-            .rayan-name {
-                font-size: 24px;
+        }
+
+        .music-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 15px;
+            height: 20px;
+        }
+
+        .music-bar {
+            width: 4px;
+            height: 15px;
+            background: linear-gradient(180deg, #ffb6c1, #ff69b4);
+            border-radius: 2px;
+            animation: musicBar 0.8s ease-in-out infinite;
+        }
+
+        .music-bar:nth-child(1) { animation-delay: 0s; }
+        .music-bar:nth-child(2) { animation-delay: 0.15s; }
+        .music-bar:nth-child(3) { animation-delay: 0.3s; }
+        .music-bar:nth-child(4) { animation-delay: 0.45s; }
+        .music-bar:nth-child(5) { animation-delay: 0.6s; }
+        .music-bar:nth-child(6) { animation-delay: 0.75s; }
+        .music-bar:nth-child(7) { animation-delay: 0.9s; }
+
+        @keyframes musicBar {
+            0%, 100% { height: 5px; }
+            50% { height: 25px; }
+        }
+
+        .click-hint {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .click-hint:hover {
+            color: #ffb6c1;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 480px) {
+            .main-image {
+                width: 180px;
+                height: 180px;
             }
-            
-            .image-container {
-                width: 150px;
-                height: 150px;
+            h1 {
+                font-size: 1.8rem;
+            }
+            .romantic-message {
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- ڤیدیۆی شاراوە بۆ دەنگ -->
-    <video class="hidden-video" id="bg-audio" loop>
-        <source src="https://github.com/farzadkhdr/rayanmm/blob/main/v1c044g50000da47pdvog65mtpdgmb00.mp4" type="video/mp4">
-    </video>
-    
-    <div class="stars" id="stars"></div>
-    
+    <!-- دڵی باکگراوند -->
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <!-- کۆنتەینەری سەرەکی -->
     <div class="container">
-        <div class="image-container">
-            <img src="https://github.com/farzadkhdr/rayanmm/blob/main/IMG_9324.jpeg" alt="رەیان">
-        </div>
-        
-        <div class="heart-icon">❤️</div>
-        
-        <div class="quote-box">
-            <div class="quote-text" id="quote-text">
-                سڵاو <span class="rayan-name">رەیان</span>! ❤️
+        <div class="card">
+            <!-- وێنە -->
+            <div class="image-wrapper">
+                <div class="love-ring"></div>
+                <div class="love-ring-2"></div>
+                <img 
+                    src="https://raw.githubusercontent.com/farzadkhdr/rayanmm/main/IMG_9324.jpeg" 
+                    alt="ڕەیان" 
+                    class="main-image"
+                    id="mainImage"
+                >
+                <span class="heart-icon">❤️</span>
             </div>
-        </div>
-        
-        <div>
-            <button class="btn" onclick="showNextQuote()">وتەی داهاتوو 🔄</button>
-            <button class="btn" onclick="startProposal()">پێشنیارە تایبەتەکە 💍</button>
+
+            <!-- ناو -->
+            <h1>ڕەیان ❤️</h1>
+
+            <!-- پەیامی ڕۆمانسی -->
+            <div class="message-box">
+                <p class="romantic-message active" id="message"></p>
+            </div>
+
+            <!-- ئاماژەی مۆسیقا -->
+            <div class="music-indicator">
+                <div class="music-bar"></div>
+                <div class="music-bar"></div>
+                <div class="music-bar"></div>
+                <div class="music-bar"></div>
+                <div class="music-bar"></div>
+                <div class="music-bar"></div>
+                <div class="music-bar"></div>
+            </div>
+
+            <!-- کلیک بۆ دەنگ -->
+            <p class="click-hint" id="clickHint">🎵 کلیک بکە بۆ دەستپێکردنی مۆسیقا</p>
         </div>
     </div>
-    
-    <div class="sound-control">
-        <button class="sound-btn" onclick="toggleSound()">🔊 دەنگ</button>
-    </div>
-    
+
+    <!-- دەنگی شاراوە -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://raw.githubusercontent.com/farzadkhdr/rayanmm/main/v1c044g50000da47pdvog65mtpdgmb00.mp4" type="audio/mp4">
+        <source src="https://raw.githubusercontent.com/farzadkhdr/rayanmm/main/v1c044g50000da47pdvog65mtpdgmb00.mp4" type="audio/mpeg">
+    </audio>
+
     <script>
-        const quotes = [
-            `ئەی <span class="rayan-name">رەیان</span>، تۆ وەک ئەستێرەیەکی درەوشاوە لە ئاسمانی ژیانمدا ✨`,
-            `<span class="rayan-name">رەیان</span>، هەموو ڕۆژێک لەگەڵ تۆ وەک خەونێکی جوانە 💫`,
-            `جوانی ناوی <span class="rayan-name">رەیان</span> وەک جوانی ڕوخساری تۆیە 🌹`,
-            `ئەی <span class="rayan-name">رەیان</span>ی دلنیازم، تۆ جوانترین بەشی ژیانمی ❤️`,
-            `<span class="rayan-name">رەیان</span>، دەستم بگرە و با پێکەوە ژیانێکی جوان دروست بکەین 🤝`,
-            `هەر کاتێک ناوی <span class="rayan-name">رەیان</span> دەبیسم، دڵم لە شادی دەتەکێت 💖`,
-            `ئەی <span class="rayan-name">رەیان</span>، تۆ گوڵێکی جوانی لە باخچەی ژیانمدا 🌸`
+        // لیستی پەیامە ڕۆمانسییەکان
+        const romanticMessages = [
+            "ڕەیان، تۆ خۆشترین شتی ژیانمی ❤️",
+            "هەر کاتێک دەتبینم، دڵم خێراتر لێدەدات 💕",
+            "تۆ وەک ئەستێرەیەکی بە ئاسمانی ژیانمدا درەوشاوەیە ✨",
+            "جوانییەکەت وەک گوڵێکی بەهارە، هەموو ساتێک گەشاوەتر دەبیت 🌸",
+            "ڕەیان، ناوت لە دڵمدا نەخشێنراوە بۆ هەمیشە 💖",
+            "تۆ هۆکاری زەردەخەنەی منیت لە هەموو ڕۆژێکدا 😊",
+            "خۆشەویستی من بۆ تۆ وەک دەریایە، بێ کۆتایی و قوڵە 🌊",
+            "هەر شتێک لە تۆدا جوانە، لە ناوەوە و دەرەوە 💝",
+            "تۆ تەنها کەسی منی، ئەمڕۆ و سبەینێ و هەمیشە 💑",
+            "ڕەیان، تۆ واتای ژیانم دەگۆڕیت بۆ جوانترین شت 🦋",
+            "لەگەڵ تۆدا هەموو ساتێک جادوویە، هەموو چرکەیەک خۆشەویستییە ✨",
+            "تۆ وەک ڕۆژێکی پڕ لە خۆر، گەرمی دەبەخشیتە دڵم ☀️",
+            "هەر وشەیەک لە دەمتەوە وەک مۆسیقایە بۆ گوێم 🎵",
+            "ڕەیان، تۆ جوانترین هەڵبژاردەی ژیانمی ❤️",
+            "تۆ دڵم دەبەیتە بەهەشتێک لە خۆشەویستی 💒",
+            "من و تۆ... جوانترین چیرۆکی خۆشەویستین 📖",
+            "هەر هەناسەیەکم بۆ تۆ دەبێت، هەر لێدانێکی دڵم بۆ تۆیە 💓",
+            "ڕەیان، تۆ ئەو کەسەی کە چاوەڕوانی تۆ بووم بە درێژایی ژیانم 🌟",
+            "تۆ وەک پەڵەیەکی جوانیت لە ژیانمدا کە ناتوانم بەبێ تۆ ژیاوم 🌺",
+            "خۆشەویستی من بۆ تۆ لە هەموو زمانێک بەرزترە ❤️🔥"
         ];
-        
-        let currentQuoteIndex = 0;
-        let audioInitialized = false;
-        
-        // دروستکردنی ئەستێرەکان
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 50; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 2 + 's';
-                starsContainer.appendChild(star);
-            }
-        }
-        
-        // دروستکردنی بەفر
-        function createSnowflakes() {
-            setInterval(() => {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                snowflake.innerHTML = '❄';
-                snowflake.style.left = Math.random() * 100 + '%';
-                snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
-                snowflake.style.fontSize = Math.random() * 15 + 10 + 'px';
-                document.body.appendChild(snowflake);
-                
-                setTimeout(() => {
-                    snowflake.remove();
-                }, 5000);
-            }, 500);
-        }
-        
-        // گۆڕینی وتەکان
-        function showNextQuote() {
-            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-            const quoteText = document.getElementById('quote-text');
-            quoteText.style.opacity = '0';
+
+        let messageIndex = 0;
+        const messageElement = document.getElementById('message');
+        const audio = document.getElementById('bgMusic');
+        const clickHint = document.getElementById('clickHint');
+
+        // گۆڕینی پەیامەکان
+        function changeMessage() {
+            messageElement.classList.remove('active');
             
             setTimeout(() => {
-                quoteText.innerHTML = quotes[currentQuoteIndex];
-                quoteText.style.opacity = '1';
-            }, 300);
+                messageElement.textContent = romanticMessages[messageIndex];
+                messageElement.classList.add('active');
+                messageIndex = (messageIndex + 1) % romanticMessages.length;
+            }, 500);
         }
-        
-        // دەستپێکردنی پێشنیارە تایبەتەکە
-        function startProposal() {
-            const proposalQuotes = [
-                `ئەی <span class="rayan-name">رەیان</span>ی خۆشەویستم... 🌹`,
-                `لەو کاتەوەی ناسیوتمەت، ژیانم ڕەنگێکی تری وەرگرتووە 💕`,
-                `ئەی <span class="rayan-name">رەیان</span>، دەزانم مانگی ١١ دێیت بۆ خوازبینی... 💍`,
-                `دەمەوێت بڵێم کە تۆ باشترین هەڵبژاردەی ژیانمی ❤️`,
-                `ئەی <span class="rayan-name">رەیان</span>، ئایا دەبیتە هاوسەری من؟ 💑`,
-                `بە هەموو دڵ و گیانمەوە چاوەڕێت دەکەم <span class="rayan-name">رەیان</span> 💖`
-            ];
+
+        // گۆڕینی پەیام بە شێوەی خولگەیی
+        setInterval(changeMessage, 4000);
+
+        // دروستکردنی دڵی باکگراوند
+        function createHearts() {
+            const heartsBg = document.getElementById('heartsBg');
+            const heartSymbols = ['❤️', '💕', '💗', '💖', '💓', '🩷'];
             
-            let index = 0;
-            const quoteText = document.getElementById('quote-text');
-            
-            function showProposalQuote() {
-                if (index < proposalQuotes.length) {
-                    quoteText.style.opacity = '0';
-                    
-                    setTimeout(() => {
-                        quoteText.innerHTML = proposalQuotes[index];
-                        quoteText.style.opacity = '1';
-                        index++;
-                        
-                        setTimeout(showProposalQuote, 2500);
-                    }, 300);
-                }
-            }
-            
-            showProposalQuote();
+            setInterval(() => {
+                const heart = document.createElement('span');
+                heart.classList.add('heart-particle');
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                heartsBg.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 10000);
+            }, 500);
         }
-        
-        // کۆنترۆڵکردنی دەنگ
-        function toggleSound() {
-            const video = document.getElementById('bg-audio');
-            
-            if (!audioInitialized) {
-                video.load();
-                video.volume = 0.5;
-                video.play().catch(e => console.log('چاوەڕوانی کلیک بکە'));
-                audioInitialized = true;
-            }
-            
-            if (video.paused) {
-                video.play();
-                document.querySelector('.sound-btn').innerHTML = '🔊 دەنگ';
+
+        // دەستپێکردنی دڵەکان
+        createHearts();
+
+        // کلیک بۆ دەستپێکردنی مۆسیقا
+        clickHint.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    clickHint.textContent = '🎵 مۆسیقا لە کاردایە...';
+                    clickHint.style.color = '#ffb6c1';
+                }).catch(err => {
+                    console.error('ناتوانرێت مۆسیقا بخرێتە کار:', err);
+                    clickHint.textContent = '❌ ناتوانرێت مۆسیقا بخرێتە کار';
+                });
             } else {
-                video.pause();
-                document.querySelector('.sound-btn').innerHTML = '🔇 بێدەنگ';
-            }
-        }
-        
-        // دەستپێکردنی دەنگ بە یەکەم کلیک
-        document.addEventListener('click', function() {
-            if (!audioInitialized) {
-                const video = document.getElementById('bg-audio');
-                video.load();
-                video.volume = 0.3;
-                video.play().catch(e => console.log('ناکرێت دەنگ لێبدرێت'));
-                audioInitialized = true;
+                audio.pause();
+                clickHint.textContent = '🎵 کلیک بکە بۆ دەستپێکردنی مۆسیقا';
+                clickHint.style.color = 'rgba(255, 255, 255, 0.5)';
             }
         });
-        
-        // دەستپێکردن
-        createStars();
-        createSnowflakes();
-        
-        // گۆڕینی خۆکارانەی وتەکان هەر ٥ چرکە
-        setInterval(showNextQuote, 5000);
+
+        // هەوڵی خۆکارانە بۆ دەستپێکردنی مۆسیقا (لەوانەیە بلۆک بکرێت لەلایەن وێبگەڕەوە)
+        document.addEventListener('click', function initAudio() {
+            if (audio.paused) {
+                audio.play().catch(() => {});
+            }
+            document.removeEventListener('click', initAudio);
+        }, { once: true });
     </script>
 </body>
 </html>
